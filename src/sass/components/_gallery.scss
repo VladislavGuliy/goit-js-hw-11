@@ -1,0 +1,104 @@
+@media screen and (min-width: 300px){
+    .gallery {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 6px 6px;
+        justify-content: center;
+        margin-top: 90px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        justify-content: center;
+    }
+    
+    .photo-card {
+        display: block;
+        width: calc(90vw - 10px);
+        height: calc(85vw - 4px);
+        margin: 5px;
+        background-color: aliceblue;
+        box-shadow: 2px 2px 2px 0px rgba(185, 174, 174, 0.7);
+        transition: box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 5px;
+    }
+    .gallery__image {
+        width: 100%;
+        height: 80%;
+    }
+    
+    .info {
+        display: flex;
+
+        font-size: 10px;
+        justify-content: space-around;
+    }
+    .info-item {
+        display:flex;
+        flex-direction: column;
+        text-align: center;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+@media screen and (min-width: 400px) {
+    .info {
+        font-size: 14px;
+     }
+    .gallery {
+      margin-top: 98px;
+    }
+}
+
+@media screen and (min-width: 520px) {
+    .gallery {
+      grid-template-columns: 1fr 1fr;
+    }
+    .photo-card {
+      width: calc(45vw - 5px);
+      height: calc(39vw - 5px);
+    }
+    .info {
+      font-size: 12px;
+    }
+}
+  
+@media screen and (min-width: 700px) {
+    .info {
+      font-size: 12px;
+    }
+}
+  
+@media screen and (min-width: 900px) {
+    .gallery {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    .photo-card {
+      width: calc(31vw - 5px);
+      height: calc(26vw - 5px);
+    }
+    .info {
+      font-size: 12px;
+    }
+}
+  
+@media screen and (min-width: 1200px) {
+    .gallery {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+    }
+    .photo-card {
+      width: calc(24vw - 5px);
+      height: calc(20vw - 5px);
+    }
+    .info {
+      font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 1980px) {
+    .info {
+      font-size: 16px;
+    }
+}

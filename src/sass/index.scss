@@ -1,2 +1,8 @@
-@import './common';
-@import './example';
+@import './utils/vissually-hidden';
+
+@import './base/common';
+@import './base/body';
+
+@import './components/search';
+@import './components/button-load-more';
+@import './components/gallery';
