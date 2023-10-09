@@ -17,21 +17,23 @@ let name = refs.searchQuery.value;
 
 refs.loadMoreButton.classList.add('visually-hidden');
 
-function eventVerification(event) {
-  event.preventDefault();
+async function eventVerification(event) {
+  try {
+    event.preventDefault();
 
-  refs.gallery.innerHTML = '';
-  refs.loadMoreButton.classList.add('visually-hidden');
-  page = 1;
-  name = refs.searchQuery.value;
+    refs.gallery.innerHTML = '';
+    refs.loadMoreButton.classList.add('visually-hidden');
+    page = 1;
+    name = refs.searchQuery.value;
 
-  fetchImages(name, page, perPage)
-    .then(name => {
-      let totalPages = Math.ceil(name.totalHits / perPage);
+    const result = await fetchImages(name, page, perPage);
 
-      if (name.hits.length > 0) {
-        Notiflix.Notify.success(`Hooray! We found ${name.totalHits} images.`);
-        galleryСreation(name);
+    if (result) {
+      let totalPages = Math.ceil(result.totalHits / perPage);
+      
+      if (result.hits.length > 0) {
+        Notiflix.Notify.success(`Hooray! We found ${result.totalHits} images.`);
+        galleryСreation(result);
         lightbox.refresh();
 
         if (page < totalPages) {
@@ -49,8 +51,10 @@ function eventVerification(event) {
         refs.gallery.innerHTML = '';
         refs.searchForm.reset();
       }
-    })
-    .catch(error => console.log(error));
+    }
+  } catch {
+    error => console.log(error);
+  }
 }
 
 refs.searchForm.addEventListener('submit', eventVerification);
@@ -84,31 +88,37 @@ function galleryСreation(name) {
 
 refs.loadMoreButton.addEventListener('click', showLoadMoreImages, true);
 
-function showLoadMoreImages() {
-  name = refs.searchQuery.value;
-  page += 1;
+async function showLoadMoreImages() {
+  try {
+    name = refs.searchQuery.value;
+    page += 1;
 
-  fetchImages(name, page, perPage).then(name => {
-    let totalPages = Math.ceil(name.totalHits / perPage);
-    galleryСreation(name);
+    const result = await fetchImages(name, page, perPage);
 
-    const { height: cardHeight } = document
-      .querySelector('.gallery')
-      .firstElementChild.getBoundingClientRect();
+    if (result) {
+      let totalPages = Math.ceil(result.totalHits / perPage);
+      galleryСreation(result);
 
-    window.scrollBy({
-      top: cardHeight * 2,
-      behavior: 'smooth',
-    });
+      const { height: cardHeight } = document
+        .querySelector('.gallery')
+        .firstElementChild.getBoundingClientRect();
 
-    lightbox.refresh();
+      window.scrollBy({
+        top: cardHeight * 2,
+        behavior: 'smooth',
+      });
 
-    if (page >= totalPages) {
-      refs.loadMoreButton.classList.add('visually-hidden');
+      lightbox.refresh();
 
-      Notiflix.Notify.info(
-        "We're sorry, but you've reached the end of search results."
-      );
+      if (page >= totalPages) {
+        refs.loadMoreButton.classList.add('visually-hidden');
+
+        Notiflix.Notify.info(
+          "We're sorry, but you've reached the end of search results."
+        );
+      }
     }
-  });
+  } catch {
+    error => console.log(error);
+  }
 }
